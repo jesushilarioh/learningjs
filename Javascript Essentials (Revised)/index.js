@@ -34,3 +34,63 @@ console.log('Jesus'.length);
  * - http://bit.ly/1de5qfT
  * - http://bit.ly/1atTe8t
  */
+
+// Creating objects
+var person = new Object();
+person.firstName = 'Jesus';
+person.lastName = 'Hernandez';
+console.log(person);
+
+var ages = new Array (23, 25);
+console.log(ages);
+
+// Use JSON format when creating Objects and Arrays!
+var person = {
+    firstName: "Jesus",
+    middleName: "Hilario",
+    lastName: "Hernandez"
+};
+console.log(person);
+
+var ages = [934, 89, 23];
+console.log(ages);
+
+
+/**
+ * Objects in javascript
+ *
+ * - An object is an unordered collection of key-value pairs.
+ */
+
+ var person = {
+     firstName: 'Jesus',
+     middleName: "Hilario",
+     lastName: "Hernandez",
+     // creating a method within an object
+     // getName is the key the function is the value.
+     getName: function() {
+         return ("Hello, my name is " + this.firstName + ' ' + this.middleName + ' ' + this.lastName);
+     },
+     address: {
+         zip: 34235,
+         street: "143 Main Street"
+     }
+ };
+
+// Using dot notation to get the firstName of the person object
+console.log("Hello, my name is " + person.firstName);
+console.log(person.getName());
+console.log(person);
+console.log(person.getName() + " " + "I live at " + person.address.street + ". The zip code is " + person.address.zip + ". " );
+
+/**
+ * Functions in JavaScript
+ *
+ * - Functions are "first-class" objects.
+ * - Functions can be anonymous.
+ * - Functions can be "self-executing"
+ * - Functions encapsulate and capture scope.
+ * - Closures
+ * - Module Patterns
+ * - Common.JS Module Pattern
+ */
