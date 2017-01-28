@@ -94,3 +94,30 @@ console.log(person.getName() + " " + "I live at " + person.address.street + ". T
  * - Module Patterns
  * - Common.JS Module Pattern
  */
+
+// A function used as an object
+var myFunction = function() {
+    console.log("I have been called");
+}
+
+myFunction.firstName = 'Jesus';
+console.log(myFunction);
+
+// Using an anonymous function
+setTimeout(function() {
+    console.log('hello there.');
+}, 1000);
+
+// Using a self-executing function
+// app.js
+(function() {
+    var message = 'hello there';
+    setTimeout(function() {
+        console.log("Hello there, again!");
+    }, 3000);
+})();
+
+// vendor.js ...a downloaded file that you have no power over
+if (typeof message !== 'undefined') {
+    console.log("BARRFFF!!!!");
+}
