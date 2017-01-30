@@ -1,3 +1,15 @@
 #gclp-frame-form {
     display: none;
 }
+.harmony {
+  text-decoration: line-through;
+}
+
+.rhythm {
+  color: rgb(6, 177, 184);
+}
+
+.tempo {
+  font-family: cursive;
+  font-size: 34px;
+}
