@@ -34,6 +34,16 @@ li.className = li.className.replace("tempo", "");
 log(li.className);
 log(li);
 
+log(li.classList);
+li.classList.add("new");
+log(li.classList);
+li.classList.remove("new");
+log(li.classList);
+log(li.parentElement);
+log(li.parentElement.parentElement);
+log(li.parentElement.children);
+loopItems(li.parentElement.children);
+
 // Console log Function
 function log(data) {
     console.log(data);
