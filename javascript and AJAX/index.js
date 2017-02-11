@@ -1,6 +1,13 @@
 (function() {
     var httpRequest;
-    document.getElementById("ajaxButton").onclick = function() {makeRequest('http://api.wordnik.com:80/v4/word.json//definitions?limit=2&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5'); };
+    document.getElementById("ajaxButton").onclick = function() {
+        var word = document.getElementById("ajaxTextbox").value;
+        makeRequest('http://api.wordnik.com:80/v4/word.json/'+ word + '/definitions?limit=2&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5');
+    };
+    document.getElementById("ajaxTextbox").onkeyup = function() {
+        var word = document.getElementById("ajaxTextbox").value;
+        makeRequest('http://api.wordnik.com:80/v4/word.json/'+ word + '/definitions?limit=2&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5');
+    };
 
     function makeRequest(url) {
         httpRequest = new XMLHttpRequest();
@@ -17,7 +24,11 @@
     function alertContents() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
-                console.log(JSON.parse(httpRequest.responseText)[0].text);
+                if (typeof(JSON.parse(httpRequest.responseText)[0]) == 'undefined') {
+                    console.log("Sorry.");
+                } else {
+                    console.log(JSON.parse(httpRequest.responseText)[0].word + ": " + JSON.parse(httpRequest.responseText)[0].text)
+                }
             } else if (httpRequest.status === 404){
                 console.log("404 There was a problem with the request.");
             } else {
