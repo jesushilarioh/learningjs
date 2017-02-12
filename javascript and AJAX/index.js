@@ -17,25 +17,30 @@
             return false;
         }
         httpRequest.onreadystatechange = addToHTML;
-        httpRequest.open('Get', url);
+        httpRequest.open('GET', url);
         httpRequest.send();
     }
 
     function addToHTML() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                if (typeof(JSON.parse(httpRequest.responseText)[0]) == 'undefined') {
+            switch (httpRequest.status) {
+              case 200:
+                  if (typeof(JSON.parse(httpRequest.responseText)[0]) == 'undefined') {
                     console.log("Sorry. No suggestions!");
-                } else {
+                  } else {
                     console.log(JSON.parse(httpRequest.responseText)[0].word + ": " + JSON.parse(httpRequest.responseText)[0].text)
-                }
-            } else if (httpRequest.status === 404){
-                console.log("404 ERROR: We're sorry, your request could not be processed at this time.");
-            } else if (httpRequest.status === 400){
-                console.log("400 ERROR: We're sorry, your request could not be processed at this time.");
-            } else {
-                console.log("We're sorry, your request could not be processed at this time.");
+                  }
+                  break;
+              case 400:
+                  console.log("400 ERROR: We're sorry, your request could not be processed at this time.");
+                  break;
+              case 404:
+                  console.log("404 ERROR: We're sorry, your request could not be processed at this time.");
+                  break;
+              default:
+                  console.log("We're sorry, your request could not be processed at this time.");
             }
         }
     }
+
 })();
