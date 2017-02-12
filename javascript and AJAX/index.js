@@ -16,12 +16,12 @@
             alert('Giving up :[ Cannot create an XMLHTTP instance');
             return false;
         }
-        httpRequest.onreadystatechange = alertContents;
+        httpRequest.onreadystatechange = addToHTML;
         httpRequest.open('Get', url);
         httpRequest.send();
     }
 
-    function alertContents() {
+    function addToHTML() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
                 if (typeof(JSON.parse(httpRequest.responseText)[0]) == 'undefined') {
