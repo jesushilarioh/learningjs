@@ -1,17 +1,13 @@
 (function() {
     var httpRequest;
-    var ajaxButton = document.getElementById("ajaxButton");
-    var ajaxTextbox = document.getElementById("ajaxTextbox");
 
+    document.getElementById("ajaxButton").addEventListener("click", getValueFromUser);
+    document.getElementById("ajaxTextbox").addEventListener("keyup", getValueFromUser);
 
-    ajaxButton.onclick = function() {
-        var word = document.getElementById("ajaxTextbox").value;
-        makeRequest('http://api.wordnik.com:80/v4/word.json/'+ word + '/definitions?limit=2&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5');
-    };
-    ajaxTextbox.onkeyup = function() {
-        var word = document.getElementById("ajaxTextbox").value;
-        makeRequest('http://api.wordnik.com:80/v4/word.json/'+ word + '/definitions?limit=2&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5');
-    };
+    function getValueFromUser() {
+      var word = document.getElementById("ajaxTextbox").value;
+      makeRequest('http://api.wordnik.com:80/v4/word.json/'+ word + '/definitions?limit=2&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5');
+    }
 
     function makeRequest(url) {
         httpRequest = new XMLHttpRequest();
@@ -29,7 +25,7 @@
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
                 if (typeof(JSON.parse(httpRequest.responseText)[0]) == 'undefined') {
-                    console.log("Sorry.");
+                    console.log("Sorry. No suggestions!");
                 } else {
                     console.log(JSON.parse(httpRequest.responseText)[0].word + ": " + JSON.parse(httpRequest.responseText)[0].text)
                 }
