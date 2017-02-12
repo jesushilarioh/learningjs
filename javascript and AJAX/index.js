@@ -30,9 +30,11 @@
                     console.log(JSON.parse(httpRequest.responseText)[0].word + ": " + JSON.parse(httpRequest.responseText)[0].text)
                 }
             } else if (httpRequest.status === 404){
-                console.log("404 There was a problem with the request.");
+                console.log("404 ERROR: We're sorry, your request could not be processed at this time.");
+            } else if (httpRequest.status === 400){
+                console.log("400 ERROR: We're sorry, your request could not be processed at this time.");
             } else {
-                console.log("All others!");
+                console.log("We're sorry, your request could not be processed at this time.");
             }
         }
     }
