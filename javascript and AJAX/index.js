@@ -28,46 +28,65 @@
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             switch (httpRequest.status) {
             case 200:
-                addToHTML(httpRequest.status);
+                request200();
                 break;
             case 400:
-                addToHTML(httpRequest.status);
+                request400();
                 break;
             case 404:
-                addToHTML(httpRequest.status);
+                request404();
                 break;
             default:
-                addToHTML(httpRequest.status);
+                requestOther();
             }
         }
     }
 
-    function addToHTML(num) {
+    function innerBlankHTML(usersWord, bool) {
+        if (bool === true) {
+            usersWord.innerHTML = "";
+        } else {
+            usersWord.className = "";
+        }
+    }
+
+    function request200() {
+        const searchedWordHTMLElement = document.getElementById("word"),
+            wordDefinitionHTMLElement = document.getElementById("definitions"),
+            JSONParse = JSON.parse(httpRequest.responseText);
+
+        if (typeof (JSONParse[0]) == 'undefined') {
+            innerBlankHTML(searchedWordHTMLElement, false);
+            searchedWordHTMLElement.innerHTML = "I'm sorry, " + "<strong id='wrongWord'>" + ajaxTextbox.value + "</strong>" + " is not a word...";
+            wordDefinitionHTMLElement.innerHTML = "Sorry, no suggestions...try again.";
+        } else {
+            searchedWordHTMLElement.className = "green";
+            for (var i = 0; i < JSONParse.length; i++) {
+                searchedWordHTMLElement.innerHTML = JSONParse[i].word;
+                wordDefinitionHTMLElement.innerHTML = JSONParse[i].text;
+            }
+        }
+    }
+
+    function request400() {
         const searchedWordHTMLElement = document.getElementById("word"),
             wordDefinitionHTMLElement = document.getElementById("definitions");
-        if (num === 200) {
-            if (typeof (JSON.parse(httpRequest.responseText)[0]) == 'undefined') {
-                searchedWordHTMLElement.className = "";
-                searchedWordHTMLElement.innerHTML = "I'm sorry, " + "<strong id='wrongWord'>" + ajaxTextbox.value + "</strong>" + " is not a word...";
-                wordDefinitionHTMLElement.innerHTML = "Sorry, no suggestions...try again.";
-            } else {
-                searchedWordHTMLElement.className = "green";
-                searchedWordHTMLElement.innerHTML = JSON.parse(httpRequest.responseText)[0].word;
-                wordDefinitionHTMLElement.innerHTML = JSON.parse(httpRequest.responseText)[0].text;
-            }
-        } else if (num === 400) {
-            innerBlankHTML(searchedWordHTMLElement);
-            innerBlankHTML(wordDefinitionHTMLElement);
-        } else if (num === 404) {
-            innerBlankHTML(searchedWordHTMLElement);
-            innerBlankHTML(wordDefinitionHTMLElement);
-        } else {
-            wordDefinitionHTMLElement.innerHTML = "We're sorry, your request could not be processed at this time.";
-        }
+
+        innerBlankHTML(searchedWordHTMLElement, true);
+        innerBlankHTML(wordDefinitionHTMLElement, true);
+
     }
 
-    function innerBlankHTML(usersWord) {
-        usersWord.innerHTML = "";
+    function request404() {
+        const searchedWordHTMLElement = document.getElementById("word"),
+            wordDefinitionHTMLElement = document.getElementById("definitions");
+
+        innerBlankHTML(searchedWordHTMLElement, true);
+        innerBlankHTML(wordDefinitionHTMLElement, true);
     }
 
+    function requestOther() {
+        const wordDefinitionHTMLElement = document.getElementById("definitions");
+        wordDefinitionHTMLElement.innerHTML = "We're sorry, your request could not be processed at this time.";
+    }
 })();
