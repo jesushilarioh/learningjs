@@ -1,7 +1,7 @@
 (function() {
     var httpRequest;
-        ajaxButton = document.getElementById("ajaxButton"),
-        ajaxTextbox = document.getElementById("ajaxTextbox");
+    var ajaxButton = document.getElementById("ajaxButton");
+    var ajaxTextbox = document.getElementById("ajaxTextbox");
 
         ajaxButton.addEventListener("click", getValueFromUser);
         ajaxTextbox.addEventListener("keyup", getValueFromUser);
@@ -36,7 +36,7 @@
                       document.getElementById("word").className = "green";
                       document.getElementById("word").innerHTML = JSON.parse(httpRequest.responseText)[0].word;
                       document.getElementById("definitions").innerHTML = JSON.parse(httpRequest.responseText)[0].text;
-                      console.log(JSON.parse(httpRequest.responseText)[0].word + ": " + JSON.parse(httpRequest.responseText)[0].text)
+                      console.log(JSON.parse(httpRequest.responseText)[0].word + ": " + JSON.parse(httpRequest.responseText)[0].text);
                   }
                   break;
               case 400:
