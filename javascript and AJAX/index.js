@@ -6,7 +6,6 @@
         searchedWordHTMLElement = document.getElementById("word"),
         wordDefinitionHTMLElement = document.getElementById("definitions");
 
-
     ajaxButton.addEventListener("click", getValueFromUser);
     ajaxTextbox.addEventListener("keyup", getValueFromUser);
 
@@ -28,8 +27,6 @@
     }
 
     function requestStatus() {
-
-
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             switch (httpRequest.status) {
             case 200:
@@ -57,16 +54,15 @@
 
     function request200() {
         const JSONParse = JSON.parse(httpRequest.responseText);
+
         if (typeof (JSONParse[0]) == 'undefined') {
             innerBlankHTML(searchedWordHTMLElement, false);
             searchedWordHTMLElement.innerHTML = "I'm sorry, " + "<strong id='wrongWord'>" + ajaxTextbox.value + "</strong>" + " is not a word...";
             wordDefinitionHTMLElement.innerHTML = "Sorry, no suggestions...try again.";
         } else {
             searchedWordHTMLElement.className = "green";
-            for (var i = 0; i < JSONParse.length; i++) {
-                searchedWordHTMLElement.innerHTML = JSONParse[i].word;
-                wordDefinitionHTMLElement.innerHTML = JSONParse[i].text;
-            }
+            searchedWordHTMLElement.innerHTML = JSONParse[0].word;
+            wordDefinitionHTMLElement.innerHTML = JSONParse[0].text;
         }
     }
 
