@@ -1,3 +1,9 @@
 #ajaxButton {
     cursor: pointer;
 }
+#wrongWord {
+  color: red;
+}
+.green {
+  color: green;
+}
