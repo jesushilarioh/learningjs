@@ -65,7 +65,7 @@
     function request200() {
         const JSONParse = JSON.parse(httpRequest.responseText);
 
-        if (typeof (JSONParse[0]) == 'undefined') {
+        if (typeof (JSONParse[0]) === 'undefined') {
             innerBlankHTML(searchedWordHTMLElement, false);
             searchedWordHTMLElement.innerHTML = "I'm sorry, " + "<strong id='wrongWord'>" + ajaxTextbox.value + "</strong>" + " is not a word...";
             wordDefinitionHTMLElement.innerHTML = "Sorry, no suggestions...try again.";
