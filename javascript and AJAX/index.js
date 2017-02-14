@@ -1,22 +1,16 @@
 (function () {
     //"use strict";
 
-    // Global Constants
-    const ajaxButton = document.getElementById("ajaxButton"),
-          ajaxTextbox = document.getElementById("ajaxTextbox"),
-          searchedWordHTMLElement = document.getElementById("word"),
-          wordDefinitionHTMLElement = document.getElementById("definitions");
-
     // Global variables
     var httpRequest;
 
     // Add event listeners to ajaxButton and ajaxTextbox
-    ajaxButton.addEventListener("click", getValueFromUser);
-    ajaxTextbox.addEventListener("keyup", getValueFromUser);
+    document.getElementById("ajaxButton").addEventListener("click", usersValue);
+    document.getElementById("ajaxTextbox").addEventListener("keyup", usersValue);
 
     // Recieve value from the user
-    function getValueFromUser() {
-        let word = ajaxTextbox.value;
+    function usersValue() {
+        let word = document.getElementById("ajaxTextbox").value;
         makeRequest('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5');
     }
 
@@ -35,62 +29,44 @@
 
     // Methods to take when receiving a response
     function requestStatus() {
+        const searchedWord = document.getElementById("word"),
+            wordDefinition = document.getElementById("definitions");
+
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             switch (httpRequest.status) {
             case 200:
-                request200();
+                const JSONParse = JSON.parse(httpRequest.responseText);
+
+                if (typeof (JSONParse[0]) === 'undefined') {
+                    emptyString(searchedWord, false);
+                    searchedWord.innerHTML = "I'm sorry, " + "<strong id='wrongWord'>" + document.getElementById("ajaxTextbox").value + "</strong>" + " is not a word...";
+                    wordDefinition.innerHTML = "Sorry, no suggestions...try again.";
+                } else {
+                    searchedWord.className = "green";
+                    searchedWord.innerHTML = JSONParse[0].word;
+                    wordDefinition.innerHTML = JSONParse[0].text;
+                }
                 break;
             case 400:
-                request400();
+                emptyString(searchedWord, true);
+                emptyString(wordDefinition, true);
                 break;
             case 404:
-                request404();
+                emptyString(searchedWord, true);
+                emptyString(wordDefinition, true);
                 break;
             default:
-                requestOther();
+                wordDefinition.innerHTML = "We're sorry, your request could not be processed at this time.";
             }
         }
     }
 
     // Inner api data to index.html
-    function innerBlankHTML(usersWord, bool) {
+    function emptyString(usersWord, bool) {
         if (bool === true) {
             usersWord.innerHTML = "";
         } else {
             usersWord.className = "";
         }
-    }
-
-    // Function to use if request status is 200
-    function request200() {
-        const JSONParse = JSON.parse(httpRequest.responseText);
-
-        if (typeof (JSONParse[0]) === 'undefined') {
-            innerBlankHTML(searchedWordHTMLElement, false);
-            searchedWordHTMLElement.innerHTML = "I'm sorry, " + "<strong id='wrongWord'>" + ajaxTextbox.value + "</strong>" + " is not a word...";
-            wordDefinitionHTMLElement.innerHTML = "Sorry, no suggestions...try again.";
-        } else {
-            searchedWordHTMLElement.className = "green";
-            searchedWordHTMLElement.innerHTML = JSONParse[0].word;
-            wordDefinitionHTMLElement.innerHTML = JSONParse[0].text;
-        }
-    }
-
-    // Function to use if request status is 400
-    function request400() {
-        innerBlankHTML(searchedWordHTMLElement, true);
-        innerBlankHTML(wordDefinitionHTMLElement, true);
-
-    }
-
-    // Function to use if request status is 404
-    function request404() {
-        innerBlankHTML(searchedWordHTMLElement, true);
-        innerBlankHTML(wordDefinitionHTMLElement, true);
-    }
-
-    // Function to use if request status anothor number
-    function requestOther() {
-        wordDefinitionHTMLElement.innerHTML = "We're sorry, your request could not be processed at this time.";
     }
 })();
