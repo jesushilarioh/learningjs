@@ -109,15 +109,15 @@
                 case 200:
                     const JSONParse2 = JSON.parse(httpRequest2.responseText);
 
-                    if (typeof(JSONParse2[0]) === 'undefined') {
+                    if (typeof(JSONParse2[2]) === 'undefined') {
 
                     } else {
                         let HTMLstring = "";
-                        for (i = 0, j = 1; i < JSONParse2[0].words.length; i++, j++) {
-                            console.log(j + " " + JSONParse2[0].words[i]);
-                            relatedWords.innerHTML = JSONParse2[0].words + ", ";
+                        for (i = 0; i < JSONParse2[2].words.length; i++) {
+                            console.log(JSONParse2[2].words[i]);
+                            HTMLstring += JSONParse2[2].words[i] + ",  ";
                         }
-
+                        relatedWords.innerHTML = HTMLstring;
                     }
 
                     break;
