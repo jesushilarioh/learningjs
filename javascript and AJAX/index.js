@@ -102,6 +102,7 @@
             partOfSpeech = document.getElementById("partOfSpeech"),
             wordDefinition = document.getElementById("definitions"),
             source = document.getElementById("source"),
+            typeOfRelation = document.getElementById("typeOfRelation"),
             relatedWords = document.getElementById("relatedWords");
 
         if (httpRequest2.readyState === XMLHttpRequest.DONE) {
@@ -113,11 +114,11 @@
 
                     } else {
                         let HTMLstring = "";
-                        for (i = 0; i < JSONParse2[2].words.length; i++) {
-                            console.log(JSONParse2[2].words[i]);
-                            HTMLstring += JSONParse2[2].words[i] + ",  ";
+                        for (i = 0; i < JSONParse2[0].words.length; i++) {
+                            HTMLstring += JSONParse2[0].words[i] + ",  ";
                         }
                         relatedWords.innerHTML = HTMLstring;
+                        typeOfRelation.innerHTML = JSONParse2[0].relationshipType;
                     }
 
                     break;
