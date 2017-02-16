@@ -13,10 +13,10 @@
     function usersValue() {
         let word = document.getElementById("ajaxTextbox").value;
         makeRequest("http://api.wordnik.com:80/v4/word.json/" + word + "/definitions?limit=200&includeRelated=true&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d");
-        makeRequest2("http://api.wordnik.com:80/v4/word.json/" + word + "/relatedWords?limit=200&includeRelated…ncludeTags=false&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d");
+        makeRequest2("http://api.wordnik.com:80/v4/word.json/" + word + "/relatedWords?useCanonical=true&relationshipTypes=synonym&limitPerRelationshipType=100&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d");
     }
 
-//"http://api.wordnik.com/v4/word.json/" + word + "/relatedWords?limit=200&includeRelated…ncludeTags=false&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d"
+    //"http://api.wordnik.com/v4/word.json/" + word + "/relatedWords?limit=200&includeRelated…ncludeTags=false&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d"
 
 
     // Request the URL api
@@ -57,11 +57,10 @@
                     const JSONParse = JSON.parse(httpRequest.responseText);
 
                     if (typeof(JSONParse[0]) === 'undefined') {
-                        emptyString(searchedWord, false);
                         searchedWord.innerHTML = "<strong id='wrongWord'>" + document.getElementById("ajaxTextbox").value;
-                        partOfSpeech.innerHTML = "Oops...";
-                        wordDefinition.innerHTML = "Sorry, no suggestions";
-                        source.innerHTML = "...Try Again";
+                        partOfSpeech.innerHTML = "...Hmmm... That's an interesting looking word...";
+                        wordDefinition.innerHTML = "However, There are no suggestions at this time..."
+                        source.innerHTML = "Please Try Again.";
                     } else {
                         searchedWord.className = "green";
                         searchedWord.innerHTML = JSONParse[0].word;
@@ -97,6 +96,17 @@
         }
     }
 
+
+    // Inner api data to index.html
+    function emptyString(usersWord, bool) {
+        if (bool === true) {
+            usersWord.innerHTML = "";
+        } else {
+            usersWord.className = "";
+        }
+    }
+
+
     function requestStatus2() {
         const searchedWord = document.getElementById("word"),
             partOfSpeech = document.getElementById("partOfSpeech"),
@@ -110,39 +120,37 @@
                 case 200:
                     const JSONParse2 = JSON.parse(httpRequest2.responseText);
 
-                    if (typeof(JSONParse2[2]) === 'undefined') {
-
+                    if (typeof(JSONParse2[0]) === 'undefined') {
+                        emptyString(relatedWords, true);
+                        emptyString(typeOfRelation, true);
                     } else {
                         let HTMLstring = "";
                         for (i = 0; i < JSONParse2[0].words.length; i++) {
                             HTMLstring += JSONParse2[0].words[i] + ",  ";
+
                         }
                         relatedWords.innerHTML = HTMLstring;
                         typeOfRelation.innerHTML = JSONParse2[0].relationshipType;
+                        console.log(JSONParse2.length);
                     }
 
                     break;
                 case 400:
-
+                    emptyString(relatedWords, true);
+                    emptyString(typeOfRelation, true);
                     break;
                 case 404:
-
+                    emptyString(relatedWords, true);
+                    emptyString(typeOfRelation, true);
                     break;
                 case 503:
-
+                    emptyString(relatedWords, true);
+                    emptyString(typeOfRelation, true);
                     break;
                 default:
-
+                    emptyString(relatedWords, true);
+                    emptyString(typeOfRelation, true);
             }
-        }
-    }
-
-    // Inner api data to index.html
-    function emptyString(usersWord, bool) {
-        if (bool === true) {
-            usersWord.innerHTML = "";
-        } else {
-            usersWord.className = "";
         }
     }
 
