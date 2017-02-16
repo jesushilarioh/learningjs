@@ -101,7 +101,8 @@
         const searchedWord = document.getElementById("word"),
             partOfSpeech = document.getElementById("partOfSpeech"),
             wordDefinition = document.getElementById("definitions"),
-            source = document.getElementById("source");
+            source = document.getElementById("source"),
+            relatedWords = document.getElementById("relatedWords");
 
         if (httpRequest2.readyState === XMLHttpRequest.DONE) {
             switch (httpRequest2.status) {
@@ -111,11 +112,12 @@
                     if (typeof(JSONParse2[0]) === 'undefined') {
 
                     } else {
-
-
+                        let HTMLstring = "";
                         for (i = 0, j = 1; i < JSONParse2[0].words.length; i++, j++) {
                             console.log(j + " " + JSONParse2[0].words[i]);
+                            relatedWords.innerHTML = JSONParse2[0].words + ", ";
                         }
+
                     }
 
                     break;
