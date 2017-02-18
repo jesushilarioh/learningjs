@@ -11,7 +11,7 @@
     el.textContent = colors[0];
 
 
-    // array constructor
+    // array constructor:
     let colors2 = new Array('grand red',
         'green seven',
         'seven orange');

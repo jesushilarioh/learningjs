@@ -58,15 +58,15 @@
 
                     if (typeof(JSONParse[0]) === 'undefined') {
                         searchedWord.innerHTML = "<strong id='wrongWord'>" + document.getElementById("ajaxTextbox").value.toLowerCase();
-                        partOfSpeech.innerHTML = "...Hmmm... That's an interesting input...";
-                        wordDefinition.innerHTML = "However, There are no suggestions at this time..."
-                        source.innerHTML = "Please Try Again.";
+                        partOfSpeech.textContent = "...Hmmm... That's an interesting input...";
+                        wordDefinition.textContent = "However, There are no suggestions at this time..."
+                        source.textContent = "Please Try Again.";
                     } else {
                         searchedWord.className = "green";
-                        searchedWord.innerHTML = JSONParse[0].word;
-                        partOfSpeech.innerHTML = JSONParse[0].partOfSpeech;
-                        wordDefinition.innerHTML = JSONParse[0].text;
-                        source.innerHTML = JSONParse[0].attributionText;
+                        searchedWord.textContent = JSONParse[0].word;
+                        partOfSpeech.textContent = JSONParse[0].partOfSpeech;
+                        wordDefinition.textContent = JSONParse[0].text;
+                        source.textContent = JSONParse[0].attributionText;
                     }
 
                     break;
@@ -78,11 +78,11 @@
                     break;
                 case 503:
                     emptyAll();
-                    wordDefinition.innerHTML = "We're sorry, your request could not be processed at this time. Technical difficulties have occured on our end... please check back soon!";
+                    wordDefinition.textContent = "We're sorry, your request could not be processed at this time. Technical difficulties have occured on our end... please check back soon!";
                     break;
                 default:
                     emptyAll();
-                    wordDefinition.innerHTML = "We're sorry, your request could not be processed at this time. Technical difficulties have occured on our end... please check back soon!";
+                    wordDefinition.textContent = "We're sorry, your request could not be processed at this time. Technical difficulties have occured on our end... please check back soon!";
 
             }
 
@@ -100,7 +100,7 @@
     // Inner api data to index.html
     function emptyString(usersWord, bool) {
         if (bool === true) {
-            usersWord.innerHTML = "";
+            usersWord.textContent = "";
         } else {
             usersWord.className = "";
         }
@@ -129,8 +129,8 @@
                             HTMLstring += JSONParse2[0].words[i] + ",  ";
 
                         }
-                        relatedWords.innerHTML = HTMLstring;
-                        typeOfRelation.innerHTML = JSONParse2[0].relationshipType;
+                        relatedWords.textContent = HTMLstring;
+                        typeOfRelation.textContent = JSONParse2[0].relationshipType;
                     }
 
                     break;
