@@ -1,4 +1,10 @@
 body {
     text-align: center;
-    padding-top: 240px;
+    padding-top: 30px;
+}
+.true {
+    background-color: green;
+}
+.false {
+    background-color: red;
 }
