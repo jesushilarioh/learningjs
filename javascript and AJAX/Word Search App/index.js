@@ -11,7 +11,7 @@
 
     // Recieve value from the user
     function usersValue() {
-        let word = document.getElementById("ajaxTextbox").value;
+        let word = document.getElementById("ajaxTextbox").value.toLowerCase();
         makeRequest("http://api.wordnik.com:80/v4/word.json/" + word + "/definitions?limit=200&includeRelated=true&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d");
         makeRequest2("http://api.wordnik.com:80/v4/word.json/" + word + "/relatedWords?useCanonical=true&relationshipTypes=synonym&limitPerRelationshipType=100&api_key=551cd772a6bd0f92b40010e295e0739d0acaf17d08ecc3c9d");
     }
@@ -57,8 +57,8 @@
                     const JSONParse = JSON.parse(httpRequest.responseText);
 
                     if (typeof(JSONParse[0]) === 'undefined') {
-                        searchedWord.innerHTML = "<strong id='wrongWord'>" + document.getElementById("ajaxTextbox").value;
-                        partOfSpeech.innerHTML = "...Hmmm... That's an interesting looking word...";
+                        searchedWord.innerHTML = "<strong id='wrongWord'>" + document.getElementById("ajaxTextbox").value.toLowerCase();
+                        partOfSpeech.innerHTML = "...Hmmm... That's an interesting input...";
                         wordDefinition.innerHTML = "However, There are no suggestions at this time..."
                         source.innerHTML = "Please Try Again.";
                     } else {
@@ -131,7 +131,6 @@
                         }
                         relatedWords.innerHTML = HTMLstring;
                         typeOfRelation.innerHTML = JSONParse2[0].relationshipType;
-                        console.log(JSONParse2.length);
                     }
 
                     break;
