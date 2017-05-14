@@ -1,1 +1,2 @@
 http://jsfiddle.net/rHKML/
+http://www.stylinwithcss.com/blog/post.php?s=2012-12-21-click-states-with-jquery-and-css---part-1
